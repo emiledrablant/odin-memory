@@ -19,7 +19,7 @@ function CardsHandler({arrayOfPokemonIds}) {
 
                 const capitalizedName = json.name.charAt(0).toUpperCase() + json.name.slice(1);
                 const currentPokemon = {
-                    id: i,
+                    id: arrayOfPokemonIds[i],
                     name: capitalizedName,
                     img: json.sprites.front_default,
                 }
@@ -33,7 +33,7 @@ function CardsHandler({arrayOfPokemonIds}) {
     return (
         <div className="card-container">
         {pokemons.map((pokemon) => (
-            <Card pokemon={pokemon} />
+            <Card key={pokemon.id} pokemon={pokemon} />
         ))}
         </div>
     )
