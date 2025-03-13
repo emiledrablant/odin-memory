@@ -2,6 +2,8 @@
 import React from "react";
 import Card from "./Card";
 
+import '../styles/cards.css'
+
 // expects a number after /pokemon/
 const DATA_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -29,15 +31,11 @@ function CardsHandler({arrayOfPokemonIds}) {
     }, [arrayOfPokemonIds]);
 
     return (
-        <>
+        <div className="card-container">
         {pokemons.map((pokemon) => (
-            // to move into the Card component
-            <div key={pokemon.id}>
-                {pokemon.name}
-                <img src={pokemon.img} />
-            </div>
+            <Card pokemon={pokemon} />
         ))}
-        </>
+        </div>
     )
 }
 
