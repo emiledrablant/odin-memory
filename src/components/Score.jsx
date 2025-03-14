@@ -1,10 +1,13 @@
 
-function Score() {
+import '../App.css'
+
+function Score({ currentScore, bestScore }) {
 
     return (
-        <>
-        
-        </>
+    <div className="score">
+        Current score: {currentScore}<br />
+        Best score: {bestScore}
+     </div>
     )
 }
 

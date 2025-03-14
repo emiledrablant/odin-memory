@@ -7,6 +7,7 @@ import '../styles/cards.css'
 // expects a number after /pokemon/
 const DATA_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
 
+// To improve later on because it's probably bugged right now
 function shuffleOrder(oldArray) {
     const newArray = [...oldArray];
       for (let i = oldArray.length - 1; i > 0; i--) {
@@ -39,7 +40,8 @@ function CardsHandler({arrayOfPokemonIds}) {
         dataFetcher();
     }, [arrayOfPokemonIds]);
 
-    function onClick() {
+    function onClick(pokemon) {
+        console.log(pokemon);
         const newOrder = shuffleOrder(pokemons);
         setPokemons(newOrder);
     }

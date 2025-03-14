@@ -25,7 +25,10 @@ function App() {
 
   return (
   <>
-      <Score />
+      <Score
+        currentScore={currentScore}
+        bestScore={bestScore}
+      />
       <CardsHandler arrayOfPokemonIds={arrayOfPokemonIds} />
   </>
   )
