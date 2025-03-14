@@ -17,8 +17,9 @@ function shuffleOrder(oldArray) {
       return newArray;
 }
 
-function CardsHandler({arrayOfPokemonIds}) {
+function CardsHandler({arrayOfPokemonIds, gameHandler}) {
     const [pokemons, setPokemons] = React.useState([]);
+    const [currentPokemonsPlayed, setCurrentPokemonsPlayed] = React.useState([]);
 
     React.useEffect(() => {
         const fetchedPokemons = [];
@@ -40,10 +41,18 @@ function CardsHandler({arrayOfPokemonIds}) {
         dataFetcher();
     }, [arrayOfPokemonIds]);
 
+    // Come up with a better descriptive name
     function onClick(pokemon) {
-        console.log(pokemon);
-        const newOrder = shuffleOrder(pokemons);
-        setPokemons(newOrder);
+        // The clicked item is added to the current game array
+        setCurrentPokemonsPlayed([...currentPokemonsPlayed, pokemon]);
+        
+        if (currentPokemonsPlayed.includes(pokemon)) {
+            gameHandler(true);
+        } else { // The game continues
+            gameHandler();
+            const newOrder = shuffleOrder(pokemons);
+            setPokemons(newOrder);
+        }
     }
 
     return (

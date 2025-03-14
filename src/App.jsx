@@ -20,16 +20,29 @@ function produceNumbers() {
 function App() {
   const [currentScore, setCurrentScore] = React.useState(0);
   const [bestScore, setBestScore] = React.useState(0);
+  const refScore = React.useRef(0);
 
   const arrayOfPokemonIds = produceNumbers();
+
+  function gameHandler(gameIsOver = false) {
+    if (gameIsOver) {
+      console.log("bla");
+    } else {
+      refScore.current += 1;
+      //setCurrentScore(currentScore + 1);
+    }
+  }
 
   return (
   <>
       <Score
-        currentScore={currentScore}
+        currentScore={refScore.current}
         bestScore={bestScore}
       />
-      <CardsHandler arrayOfPokemonIds={arrayOfPokemonIds} />
+      <CardsHandler
+        arrayOfPokemonIds={arrayOfPokemonIds}
+        gameHandler={gameHandler}
+      />
   </>
   )
 }
