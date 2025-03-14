@@ -7,6 +7,15 @@ import '../styles/cards.css'
 // expects a number after /pokemon/
 const DATA_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
 
+function shuffleOrder(oldArray) {
+    const newArray = [...oldArray];
+      for (let i = oldArray.length - 1; i > 0; i--) {
+        const random = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[random]] = [newArray[random], newArray[i]];
+      }
+      return newArray;
+}
+
 function CardsHandler({arrayOfPokemonIds}) {
     const [pokemons, setPokemons] = React.useState([]);
 
@@ -30,10 +39,15 @@ function CardsHandler({arrayOfPokemonIds}) {
         dataFetcher();
     }, [arrayOfPokemonIds]);
 
+    function onClick() {
+        const newOrder = shuffleOrder(pokemons);
+        setPokemons(newOrder);
+    }
+
     return (
         <div className="card-container">
         {pokemons.map((pokemon) => (
-            <Card key={pokemon.id} pokemon={pokemon} />
+            <Card key={pokemon.id} pokemon={pokemon} onClick={onClick} />
         ))}
         </div>
     )

@@ -1,13 +1,9 @@
 
 import '../styles/cards.css'
 
-function clickHandler(pokemon) {
-    console.log(pokemon.id, pokemon.name);
-}
-
-function Card({ pokemon }) {
+function Card({ pokemon, onClick }) {
     return (
-        <div className="card" onClick={() => clickHandler(pokemon)}>
+        <div className="card" onClick={onClick}>
             <p>{pokemon.name}</p>
             <img src={pokemon.img} />
         </div>
