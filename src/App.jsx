@@ -41,7 +41,7 @@ function App() {
         bestScore={bestScore}
       />
       <CardsHandler
-        arrayOfPokemonIds={arrayOfPokemonsIds}
+        arrayOfPokemonsIds={arrayOfPokemonsIds}
         gameHandler={gameHandler}
       />
   </>

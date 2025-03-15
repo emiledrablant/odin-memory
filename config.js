@@ -1,5 +1,5 @@
 const config = {
-    numberOfCards: 12,
+    numberOfCards: 18,
     minRandomNumber: 1,
     maxRandomNumber: 151,
 };

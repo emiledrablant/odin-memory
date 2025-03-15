@@ -1,6 +1,8 @@
 
 import React from 'react';
 import Card from './Card';
+import TemplateCard from './TemplateCard';
+import config from '../../config';
 
 import '../styles/cards.css';
 
@@ -17,10 +19,44 @@ function shuffleOrder(oldArray) {
       return newArray;
 }
 
-function CardsHandler({arrayOfPokemonIds, gameHandler}) {
+function CardsHandler({arrayOfPokemonsIds, gameHandler}) {
     const [pokemons, setPokemons] = React.useState([]);
     const [currentPokemonsPlayed, setCurrentPokemonsPlayed] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
 
+    React.useEffect(() => {
+        if (!arrayOfPokemonsIds.length) { return; }
+
+        setIsLoading(true);
+        setCurrentPokemonsPlayed([]);
+
+        async function dataFetcher() {
+            try {
+                const fetchPromises = arrayOfPokemonsIds.map(id =>
+                    fetch(`${DATA_ENDPOINT}${id}`)
+                    .then(response => response.json())
+                    .then(json => {
+                        const capitalizedName = json.name.charAt(0).toUpperCase() + json.name.slice(1);
+                        return {
+                            id: id,
+                            name: capitalizedName,
+                            img: json.sprites.front_default,
+                        };
+                    })
+                );
+                const fetchedPokemons = await Promise.all(fetchPromises);
+                setPokemons(fetchedPokemons);
+            } catch (error) {
+                console.error('Error fetching data', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        dataFetcher();
+    }, [arrayOfPokemonsIds]);
+
+    /*
     React.useEffect(() => {
         const fetchedPokemons = [];
         async function dataFetcher() {
@@ -39,9 +75,8 @@ function CardsHandler({arrayOfPokemonIds, gameHandler}) {
             setPokemons(fetchedPokemons);
         }
         dataFetcher();
-    }, [arrayOfPokemonIds]);
+    }, [arrayOfPokemonIds]);*/
 
-    // Come up with a better descriptive name
     function onClick(pokemon) {
         // The clicked item is added to the current game array
         setCurrentPokemonsPlayed([...currentPokemonsPlayed, pokemon]);
@@ -50,16 +85,29 @@ function CardsHandler({arrayOfPokemonIds, gameHandler}) {
             gameHandler(true);
         } else { // The game continues
             gameHandler();
-            const newOrder = shuffleOrder(pokemons);
-            setPokemons(newOrder);
+            setPokemons(shuffleOrder(pokemons));
         }
+    }
+
+    function renderTemplateCards() {
+        return Array.from({ length: config.numberOfCards }, (_, index) => (
+            <TemplateCard key={`template-${index}`} />
+        ));
     }
 
     return (
         <div className="card-container">
-        {pokemons.map((pokemon) => (
-            <Card key={pokemon.id} pokemon={pokemon} onClick={onClick} />
-        ))}
+            {isLoading ? (
+                renderTemplateCards()
+            ) : (
+                pokemons.map((pokemon) => (
+                    <Card
+                        key={pokemon.id}
+                        pokemon={pokemon}
+                        onClick={onClick}
+                    />
+                ))
+            )}
         </div>
     );
 }
