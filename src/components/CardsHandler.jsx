@@ -1,16 +1,16 @@
 
-import React from "react";
-import Card from "./Card";
+import React from 'react';
+import Card from './Card';
 
-import '../styles/cards.css'
+import '../styles/cards.css';
 
 // expects a number after /pokemon/
-const DATA_ENDPOINT = "https://pokeapi.co/api/v2/pokemon/";
+const DATA_ENDPOINT = 'https://pokeapi.co/api/v2/pokemon/';
 
 // To improve later on because it's probably bugged right now
 function shuffleOrder(oldArray) {
     const newArray = [...oldArray];
-      for (let i = oldArray.length - 1; i > 0; i--) {
+      for (let i = newArray.length - 1; i > 0; i--) {
         const random = Math.floor(Math.random() * (i + 1));
         [newArray[i], newArray[random]] = [newArray[random], newArray[i]];
       }
@@ -33,7 +33,7 @@ function CardsHandler({arrayOfPokemonIds, gameHandler}) {
                     id: arrayOfPokemonIds[i],
                     name: capitalizedName,
                     img: json.sprites.front_default,
-                }
+                };
                 fetchedPokemons.push(currentPokemon);
             }
             setPokemons(fetchedPokemons);
@@ -61,7 +61,7 @@ function CardsHandler({arrayOfPokemonIds, gameHandler}) {
             <Card key={pokemon.id} pokemon={pokemon} onClick={onClick} />
         ))}
         </div>
-    )
+    );
 }
 
 export default CardsHandler;

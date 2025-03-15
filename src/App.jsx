@@ -1,23 +1,20 @@
 
-import React from 'react'
+import React from 'react';
+import config from '../config';
 
 import Score from './components/Score';
 import CardsHandler from './components/CardsHandler';
 
-import './App.css'
-
 function produceNumbers() {
-  const randomNumbers = []
-  while(randomNumbers.length < 12) {
-      const number = Math.floor(Math.random() * 151) + 1;
+  const randomNumbers = [];
+  while(randomNumbers.length < config.numberOfCards) {
+      const number = Math.floor(Math.random() * config.maxRandomNumber) + 1;
       if (!randomNumbers.includes(number)) {
           randomNumbers.push(number);
       }
   }
   return randomNumbers;
 }
-
-//const arrayOfPokemonIds = produceNumbers();
 
 function App() {
   const [currentScore, setCurrentScore] = React.useState(0);
@@ -32,6 +29,7 @@ function App() {
       setArrayOfPokemonsIds(produceNumbers);
       setCurrentScore(0);
     } else {
+      // setCurrentScore((previousScore) => previousScore + 1); ????
       setCurrentScore(currentScore + 1);
     }
   }
@@ -47,7 +45,7 @@ function App() {
         gameHandler={gameHandler}
       />
   </>
-  )
+  );
 }
 
-export default App
+export default App;

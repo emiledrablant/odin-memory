@@ -1,5 +1,5 @@
 
-import '../App.css'
+import '../styles/score.css';
 
 function Score({ currentScore, bestScore }) {
 
@@ -8,7 +8,7 @@ function Score({ currentScore, bestScore }) {
         Current score: {currentScore}<br />
         Best score: {bestScore}
      </div>
-    )
+    );
 }
 
 export default Score;
