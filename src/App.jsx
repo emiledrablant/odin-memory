@@ -17,18 +17,22 @@ function produceNumbers() {
   return randomNumbers;
 }
 
+//const arrayOfPokemonIds = produceNumbers();
+
 function App() {
   const [currentScore, setCurrentScore] = React.useState(0);
   const [bestScore, setBestScore] = React.useState(0);
-
-  const arrayOfPokemonIds = produceNumbers();
+  const [arrayOfPokemonsIds, setArrayOfPokemonsIds] = React.useState(produceNumbers);
 
   function gameHandler(gameIsOver = false) {
     if (gameIsOver) {
-      console.log("bla");
+      if (currentScore > bestScore) {
+        setBestScore(currentScore);
+      }
+      setArrayOfPokemonsIds(produceNumbers);
+      setCurrentScore(0);
     } else {
       setCurrentScore(currentScore + 1);
-      console.log(currentScore);
     }
   }
 
@@ -39,7 +43,7 @@ function App() {
         bestScore={bestScore}
       />
       <CardsHandler
-        arrayOfPokemonIds={arrayOfPokemonIds}
+        arrayOfPokemonIds={arrayOfPokemonsIds}
         gameHandler={gameHandler}
       />
   </>

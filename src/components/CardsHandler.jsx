@@ -39,7 +39,7 @@ function CardsHandler({arrayOfPokemonIds, gameHandler}) {
             setPokemons(fetchedPokemons);
         }
         dataFetcher();
-    }, []);
+    }, [arrayOfPokemonIds]);
 
     // Come up with a better descriptive name
     function onClick(pokemon) {
